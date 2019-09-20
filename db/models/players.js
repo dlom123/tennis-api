@@ -15,13 +15,14 @@ module.exports = (sequelize, DataTypes) => {
     rightHanded: DataTypes.BOOLEAN,
     level: DataTypes.FLOAT,
     avatarUrl: DataTypes.STRING,
-    photoUrl: DataTypes.STRING
+    photoUrl: DataTypes.STRING,
+    deletedAt: DataTypes.DATE
   },
   {
     underscored: true,
     classMethods: {
       associate: db => {
-        Players.hasMany(db.matches)
+        Players.hasMany(db.playersStats)
       }
     }
   })

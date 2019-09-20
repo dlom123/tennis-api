@@ -6,8 +6,22 @@ const db = require(path.resolve(process.cwd(), 'db/models'))
 */
 
 module.exports = async (req, res) => {
+  let whereClause = {}
+  let orderClause = []
+
+  if (req.query.isActive) {
+    whereClause = {
+      deletedAt: null
+    }
+  }
+  if (req.query.sort && req.query.sort.toLowerCase() === 'lastname') {
+    orderClause.push(['lastName', 'ASC'])
+  }
+
   await db.players.findAll({
-    attributes: ['id', 'firstName', 'lastName']
+    attributes: ['id', 'firstName', 'lastName', 'gender', 'avatarUrl'],
+    where: whereClause,
+    order: orderClause
   })
     .then(players => {
       const data = {
