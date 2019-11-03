@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('players_stats', {
       id: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false
       },
       player_id: {
         type: Sequelize.INTEGER,
@@ -17,25 +17,29 @@ module.exports = {
           key: 'id'
         }
       },
-      aces: {
+      stat_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'stats',
+          key: 'id'
+        }
+      },
+      num: {
         type: Sequelize.INTEGER
       },
-      double_faults: {
-        type: Sequelize.INTEGER
-      },
-      winners: {
-        type: Sequelize.INTEGER
-      },
-      unforced_errors: {
+      denom: {
         type: Sequelize.INTEGER
       },
       created_at: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.fn('NOW')
       },
       updated_at: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.fn('NOW')
       },
       deleted_at: {
         type: Sequelize.DATE

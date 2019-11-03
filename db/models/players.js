@@ -19,12 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     deletedAt: DataTypes.DATE
   },
   {
-    underscored: true,
-    classMethods: {
-      associate: db => {
-        Players.hasMany(db.playersStats)
-      }
-    }
+    underscored: true
   })
 
   return Players

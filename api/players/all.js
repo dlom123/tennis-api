@@ -24,6 +24,7 @@ module.exports = async (req, res) => {
     order: orderClause
   })
     .then(players => {
+      console.log('GOT PLAYERS', players)
       const data = {
         // always wrap API responses in a "data" array for consistency
         data: players
