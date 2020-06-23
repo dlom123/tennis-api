@@ -9,17 +9,8 @@ module.exports = async (req, res) => {
   let whereClause = {}
   let orderClause = []
 
-  if (req.query.isActive) {
-    whereClause = {
-      deletedAt: null
-    }
-  }
-  if (req.query.sort && req.query.sort.toLowerCase() === 'lastname') {
-    orderClause.push(['lastName', 'ASC'])
-  }
-
-  await db.players.findAll({
-    attributes: ['id', 'firstName', 'lastName', 'gender', 'avatarUrl'],
+  await db.Players.findAll({
+    // attributes: ['id', 'gender', 'height', 'gender', 'avatarUrl'],
     where: whereClause,
     order: orderClause
   })

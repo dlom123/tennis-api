@@ -15,19 +15,11 @@ module.exports = {
           key: 'id'
         }
       },
-      surface_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'surfaces',
-          key: 'id'
-        }
+      setting: {
+        type: Sequelize.STRING,
       },
-      location_setting_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'location_settings',
-          key: 'id'
-        }
+      surface: {
+        type: Sequelize.STRING,
       },
       date: {
         allowNull: false,

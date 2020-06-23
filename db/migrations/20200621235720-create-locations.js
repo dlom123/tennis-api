@@ -12,6 +12,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      settings: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+      },
+      surfaces: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

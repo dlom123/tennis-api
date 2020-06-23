@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     backhand: DataTypes.INTEGER,
     avatarUrl: DataTypes.STRING,
     deletedAt: DataTypes.DATE
-  }, {})
+  }, {
+    tableName: 'players',
+    underscored: true
+  })
   Players.associate = function(models) {
     // associations can be defined here
     // Players.belongsTo(models.Users)
