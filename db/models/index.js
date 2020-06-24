@@ -6,7 +6,6 @@ const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
 const env = process.env.NODE_ENV || 'local'
 const config = require(path.resolve(process.cwd(), 'config/config.js'))[env]
-
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
 
 const db = {}
@@ -21,11 +20,11 @@ fs
     db[model.name] = model
   })
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-})
+// Object.keys(db).forEach(modelName => {
+//   if (db[modelName].associate) {
+//     db[modelName].associate(db);
+//   }
+// })
 
 sequelize.authenticate()
   .then(() => {

@@ -1,10 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const matches_doubles_sets = sequelize.define('matches_doubles_sets', {
-    deleted_at: DataTypes.DATE
-  }, {});
-  matches_doubles_sets.associate = function(models) {
+  const MatchesDoublesSets = sequelize.define('MatchesDoublesSets', {
+    score: DataTypes.INTEGER,
+    deletedAt: DataTypes.DATE
+  }, {
+    tableName: 'matches_doubles_sets',
+    underscored: true
+  });
+  MatchesDoublesSets.associate = function(models) {
     // associations can be defined here
   };
-  return matches_doubles_sets;
+  return MatchesDoublesSets;
 };

@@ -23,8 +23,9 @@ module.exports = async (req, res) => {
   //   where: whereClause,
   //   order: orderClause
   // })
-  await db.LocationSettings.findAll()
+  await db.Users.findAll({})
     .then(users => {
+      console.log('USERS', users)
       const data = {
         // always wrap API responses in a "data" array for consistency
         data: users
@@ -32,4 +33,7 @@ module.exports = async (req, res) => {
 
       return res.status(200).json(data)
     })
+  //   .catch(err => {
+  //     console.error(err)
+  //   })
 }

@@ -1,10 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const matches_doubles_teams = sequelize.define('matches_doubles_teams', {
-    deleted_at: DataTypes.DATE
-  }, {});
-  matches_doubles_teams.associate = function(models) {
+  const MatchesDoublesTeams = sequelize.define('MatchesDoublesTeams', {
+    deletedAt: DataTypes.DATE
+  }, {
+    tableName: 'matches_doubles_teams',
+    underscored: true
+  });
+  MatchesDoublesTeams.associate = function(models) {
     // associations can be defined here
   };
-  return matches_doubles_teams;
+  return MatchesDoublesTeams;
 };

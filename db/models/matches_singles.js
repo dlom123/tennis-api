@@ -1,11 +1,16 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const matches_singles = sequelize.define('matches_singles', {
+  const MatchesSingles = sequelize.define('MatchesSingles', {
+    setting: DataTypes.STRING,
+    surface: DataTypes.STRING,
     date: DataTypes.DATE,
-    deleted_at: DataTypes.DATE
-  }, {});
-  matches_singles.associate = function(models) {
+    deletedAt: DataTypes.DATE
+  }, {
+    tableName: 'matches_singles',
+    underscored: true
+  });
+  MatchesSingles.associate = function(models) {
     // associations can be defined here
   };
-  return matches_singles;
+  return MatchesSingles;
 };

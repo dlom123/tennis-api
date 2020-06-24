@@ -1,17 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('matches_doubles_sets_scores', {
+    return queryInterface.createTable('matches_doubles_sets', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      set_id: {
+      match_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'matches_doubles_sets',
+          model: 'matches_doubles',
           key: 'id'
         }
       },
@@ -39,6 +39,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('matches_doubles_sets_scores');
+    return queryInterface.dropTable('matches_doubles_sets');
   }
 };
