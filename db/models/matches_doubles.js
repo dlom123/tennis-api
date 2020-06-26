@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   });
   MatchesDoubles.associate = function(models) {
-    // associations can be defined here
+    MatchesDoubles.belongsTo(models.Locations, { as: 'location' })
+    MatchesDoubles.hasMany(models.MatchesDoublesSets, {
+      foreignKey: 'match_id',
+      as: 'sets'
+    })
   };
   return MatchesDoubles;
 };

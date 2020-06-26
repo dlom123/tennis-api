@@ -6,7 +6,7 @@ const findById = require('./findById')
 router.route('/')
   .get(all)
 
-router.route('/:userId')
+router.route('/:matchId')
   .get(findById)
 
 module.exports = router

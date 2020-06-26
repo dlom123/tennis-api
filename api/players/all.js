@@ -10,9 +10,17 @@ module.exports = async (req, res) => {
   let orderClause = []
 
   await db.Players.findAll({
-    // attributes: ['id', 'gender', 'height', 'gender', 'avatarUrl'],
+    attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
+                 'backhand', 'avatarUrl', 'createdAt'],
     where: whereClause,
-    order: orderClause
+    order: orderClause,
+    include: [
+      {
+        model: db.Users,
+        as: 'user',
+        attributes: ['id', 'firstName', 'lastName', 'email', 'createdAt']
+      }
+    ]
   })
     .then(players => {
       const data = {

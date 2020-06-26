@@ -2,6 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Players = sequelize.define('Players', {
+    userId: DataTypes.INTEGER,
     gender: DataTypes.STRING,
     height: DataTypes.INTEGER,
     rating: DataTypes.STRING,
@@ -14,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   })
   Players.associate = function(models) {
-    // associations can be defined here
-    // Players.belongsTo(models.Users)
+    Players.belongsTo(models.Users, { as: 'user' })
+    Players.hasMany(models.MatchesSinglesSets, { as: 'sets_singles' })
   }
 
   return Players

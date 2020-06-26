@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const MatchesSingles = sequelize.define('MatchesSingles', {
+    locationId: DataTypes.INTEGER,
     setting: DataTypes.STRING,
     surface: DataTypes.STRING,
     date: DataTypes.DATE,
@@ -10,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   });
   MatchesSingles.associate = function(models) {
-    // associations can be defined here
+    MatchesSingles.belongsTo(models.Locations, { as: 'location' })
+    MatchesSingles.hasMany(models.MatchesSinglesSets, {
+      foreignKey: 'match_id',
+      as: 'sets'
+    })
   };
   return MatchesSingles;
 };

@@ -1,4 +1,5 @@
-'use strict';
+'use strict'
+
 module.exports = (sequelize, DataTypes) => {
   const MatchesDoublesTeamsPlayers = sequelize.define('MatchesDoublesTeamsPlayers', {
     deletedAt: DataTypes.DATE
@@ -7,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   });
   MatchesDoublesTeamsPlayers.associate = function(models) {
-    // associations can be defined here
-  };
-  return MatchesDoublesTeamsPlayers;
-};
+    MatchesDoublesTeamsPlayers.belongsTo(models.MatchesDoublesTeams, {
+      foreignKey: 'team_id',
+      as: 'team'
+    })
+    MatchesDoublesTeamsPlayers.belongsTo(models.Players, { as: 'player' })
+  }
+  return MatchesDoublesTeamsPlayers
+}

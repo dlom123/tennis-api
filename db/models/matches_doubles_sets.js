@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   });
   MatchesDoublesSets.associate = function(models) {
-    // associations can be defined here
+    MatchesDoublesSets.belongsTo(models.MatchesDoubles, { as: 'match' })
+    MatchesDoublesSets.belongsTo(models.MatchesDoublesTeams, {
+      foreignKey: 'team_id',
+      as: 'team'
+    })
   };
   return MatchesDoublesSets;
 };

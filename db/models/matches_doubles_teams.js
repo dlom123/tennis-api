@@ -7,7 +7,14 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   });
   MatchesDoublesTeams.associate = function(models) {
-    // associations can be defined here
+    MatchesDoublesTeams.hasMany(models.MatchesDoublesSets, {
+      foreignKey: 'team_id',
+      as: 'sets'
+    })
+    MatchesDoublesTeams.hasMany(models.MatchesDoublesTeamsPlayers, {
+      foreignKey: 'team_id',
+      as: 'players'
+    })
   };
   return MatchesDoublesTeams;
 };

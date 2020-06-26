@@ -1,6 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const MatchesSinglesSets = sequelize.define('MatchesSinglesSets', {
+    matchId: DataTypes.INTEGER,
+    playerId: DataTypes.INTEGER,
     score: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {
@@ -8,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true
   });
   MatchesSinglesSets.associate = function(models) {
-    // associations can be defined here
+    MatchesSinglesSets.belongsTo(models.MatchesSingles, { as: 'match' })
+    MatchesSinglesSets.belongsTo(models.Players, { as: 'player' })
   };
   return MatchesSinglesSets;
 };
