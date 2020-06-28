@@ -1,52 +1,41 @@
-'use strict'
-
+'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('players_stats', {
+    return queryInterface.createTable('matches_doubles_teams_players', {
       id: {
-        type: Sequelize.INTEGER,
+        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       player_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'players',
           key: 'id'
         }
       },
-      stat_id: {
+      team_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
-          model: 'stats',
+          model: 'matches_doubles_teams',
           key: 'id'
         }
       },
-      num: {
-        type: Sequelize.INTEGER
-      },
-      denom: {
-        type: Sequelize.INTEGER
-      },
       created_at: {
-        type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('NOW')
+        type: Sequelize.DATE
       },
       updated_at: {
-        type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('NOW')
+        type: Sequelize.DATE
       },
       deleted_at: {
         type: Sequelize.DATE
       }
-    })
+    });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('players_stats')
+    return queryInterface.dropTable('matches_doubles_teams_players');
   }
-}
+};

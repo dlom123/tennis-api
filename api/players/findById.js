@@ -6,11 +6,19 @@ const db = require(path.resolve(process.cwd(), 'db/models'))
 */
 
 module.exports = async (req, res) => {
-  await db.players.findOne({
-    attributes: ['id', 'firstName', 'lastName', 'gender', 'avatarUrl'],
+  await db.Players.findOne({
+    attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
+                 'backhand', 'avatarUrl', 'createdAt'],
     where: {
       id: Number(req.params.playerId)
-    }
+    },
+    include: [
+      {
+        model: db.Users,
+        as: 'user',
+        attributes: ['id', 'firstName', 'lastName', 'email', 'createdAt']
+      }
+    ]
   })
     .then(player => {
       const data = {

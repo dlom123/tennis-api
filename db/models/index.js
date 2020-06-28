@@ -6,7 +6,6 @@ const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
 const env = process.env.NODE_ENV || 'local'
 const config = require(path.resolve(process.cwd(), 'config/config.js'))[env]
-
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
 
 const db = {}
@@ -21,6 +20,12 @@ fs
     db[model.name] = model
   })
 
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+})
+
 sequelize.authenticate()
   .then(() => {
     console.log('Database connection has been established successfully.')
@@ -31,16 +36,5 @@ sequelize.authenticate()
 
 db.Sequelize = Sequelize
 db.sequelize = sequelize
-
-// put all models on the db object
-db.players = require('../models/players')(sequelize, Sequelize)
-db.playersStats = require('../models/playersStats')(sequelize, Sequelize)
-db.stats = require('../models/stats')(sequelize, Sequelize)
-
-// Associations
-db.players.hasMany(db.playersStats, { as: 'playerStats' })
-db.playersStats.belongsTo(db.players)
-db.playersStats.belongsTo(db.stats)
-db.stats.hasMany(db.playersStats, { as: 'playerStats' })
 
 module.exports = db

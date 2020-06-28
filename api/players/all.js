@@ -9,19 +9,18 @@ module.exports = async (req, res) => {
   let whereClause = {}
   let orderClause = []
 
-  if (req.query.isActive) {
-    whereClause = {
-      deletedAt: null
-    }
-  }
-  if (req.query.sort && req.query.sort.toLowerCase() === 'lastname') {
-    orderClause.push(['lastName', 'ASC'])
-  }
-
-  await db.players.findAll({
-    attributes: ['id', 'firstName', 'lastName', 'gender', 'avatarUrl'],
+  await db.Players.findAll({
+    attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
+                 'backhand', 'avatarUrl', 'createdAt'],
     where: whereClause,
-    order: orderClause
+    order: orderClause,
+    include: [
+      {
+        model: db.Users,
+        as: 'user',
+        attributes: ['id', 'firstName', 'lastName', 'email', 'createdAt']
+      }
+    ]
   })
     .then(players => {
       const data = {

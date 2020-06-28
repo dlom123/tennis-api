@@ -1,33 +1,29 @@
 'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('players_stats', {
+    return queryInterface.createTable('matches_singles', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      player_id: {
+      location_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
-          model: 'players',
+          model: 'locations',
           key: 'id'
         }
       },
-      aces: {
-        type: Sequelize.INTEGER
+      setting: {
+        type: Sequelize.STRING,
       },
-      double_faults: {
-        type: Sequelize.INTEGER
+      surface: {
+        type: Sequelize.STRING,
       },
-      winners: {
-        type: Sequelize.INTEGER
-      },
-      unforced_errors: {
-        type: Sequelize.INTEGER
+      date: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
       created_at: {
         allowNull: false,
@@ -40,9 +36,9 @@ module.exports = {
       deleted_at: {
         type: Sequelize.DATE
       }
-    })
+    });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('players_stats')
+    return queryInterface.dropTable('matches_singles');
   }
-}
+};
