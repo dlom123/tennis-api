@@ -17,6 +17,10 @@ module.exports = {
       },
       team_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'matches_doubles_teams',
+          key: 'id'
+        }
       },
       created_at: {
         allowNull: false,
