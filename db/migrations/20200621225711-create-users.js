@@ -1,4 +1,7 @@
 'use strict';
+
+const { networkInterfaces } = require("os");
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users', {
@@ -17,13 +20,22 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      avatar_url: {
+        type: Sequelize.STRING
+      },
+      is_active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       deleted_at: {
         type: Sequelize.DATE
