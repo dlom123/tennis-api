@@ -1,33 +1,24 @@
-const path = require('path')
-const db = require(path.resolve(process.cwd(), 'db/models'))
+const playersController = require('@controllers/playersController')
 
 /*
   Get all players
+
+  Optional query parameters:
+  - withCount (no value)
+    - include a count of the total number of players
 */
 
 module.exports = async (req, res) => {
-  let whereClause = {}
-  let orderClause = []
+  const data = {
+    // always wrap API responses in a "data" property for consistency
+    data: {}
+  }
 
-  await db.Players.findAll({
-    attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
-                 'backhand', 'avatarUrl', 'createdAt'],
-    where: whereClause,
-    order: orderClause,
-    include: [
-      {
-        model: db.Users,
-        as: 'user',
-        attributes: ['id', 'firstName', 'lastName', 'email', 'createdAt']
-      }
-    ]
-  })
-    .then(players => {
-      const data = {
-        // always wrap API responses in a "data" array for consistency
-        data: players
-      }
+  if ('withCount' in req.query) {
+    data.data.count = await playersController.getCount()
+  }
 
-      return res.status(200).json(data)
-    })
+  data.data.players = await playersController.getAll()
+
+  return res.status(200).json(data)
 }
