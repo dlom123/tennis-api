@@ -1,25 +1,16 @@
-const path = require('path')
-const db = require(path.resolve(process.cwd(), 'db/models'))
+const locationsController = require('@controllers/locationsController')
 
 /*
   Get all locations
 */
 
 module.exports = async (req, res) => {
-  let whereClause = {}
-  let orderClause = []
+  locations = await locationsController.getAll()
 
-  await db.Locations.findAll({
-    attributes: ['id', 'name', 'settings', 'surfaces', 'createdAt'],
-    where: whereClause,
-    order: orderClause
-  })
-    .then(locations => {
-      const data = {
-        // always wrap API responses in a "data" array for consistency
-        data: locations
-      }
-
-      return res.status(200).json(data)
-    })
+  const data = {
+    // always wrap API responses in a "data" property for consistency
+    data: locations
+  }
+  
+  return res.status(200).json(data)
 }

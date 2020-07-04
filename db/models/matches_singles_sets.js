@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
   });
   MatchesSinglesSets.associate = function(models) {
     MatchesSinglesSets.belongsTo(models.MatchesSingles, { as: 'match' })
-    MatchesSinglesSets.belongsTo(models.Players, { as: 'player' })
+    MatchesSinglesSets.belongsTo(models.Players, {
+      foreignKey: 'player_id',
+      as: 'player'
+    })
   };
   return MatchesSinglesSets;
 };

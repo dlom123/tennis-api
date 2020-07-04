@@ -20,7 +20,8 @@ module.exports = {
       },
       is_private: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       created_at: {
         allowNull: false,
