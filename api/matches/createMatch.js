@@ -1,3 +1,5 @@
+const matchesController = require('@controllers/matchesController')
+
 /*
   Create a singles or doubles match, based on `type` parameter
 
@@ -15,19 +17,27 @@ module.exports = async (req, res) => {
 
   // valid request...perform requested operation
   const matchType = req.body.type
-  if (matchType == 'singles') {
+  if (matchType === 'singles') {
+    // perform any singles-specific validation
+    // TODO: playerId must be an integer type
+
     // creating a singles match
-  } else if (matchType == 'doubles') {
+    match = await matchesController.createMatchSingles(req.body)
+  } else if (matchType === 'doubles') {
+    // perform any doubles-specific validation
+    // TODO: only two players allowed per set score
+
     // creating a doubles match
+    match = await matchesController.createMatchDoubles(req.body)
   } else {
     // invalid request -- query param `type` must have value 'singles' or 'doubles'
     return res.status(400).json({ error: 'invalid value for type parameter' })
   }
 
-  // const data = {
-  //   // always wrap API responses in a "data" property for consistency
-  //   data: matches
-  // }
-  data = { message: `created ${matchType} match`}
-  return res.status(200).json(data)
+  const data = {
+    // always wrap API responses in a "data" property for consistency
+    data: match
+  }
+
+  return res.status(201).json(data)
 }
