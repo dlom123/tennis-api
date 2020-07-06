@@ -18,13 +18,20 @@ module.exports = {
       surfaces: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
+      is_private: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       deleted_at: {
         type: Sequelize.DATE

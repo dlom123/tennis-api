@@ -8,13 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      player_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'players',
-          key: 'id'
-        }
-      },
       team_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -22,13 +15,22 @@ module.exports = {
           key: 'id'
         }
       },
+      player_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'players',
+          key: 'id'
+        }
+      },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       deleted_at: {
         type: Sequelize.DATE

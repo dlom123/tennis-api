@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     matchId: DataTypes.INTEGER,
     playerId: DataTypes.INTEGER,
     score: DataTypes.INTEGER,
+    seq: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {
     tableName: 'matches_singles_sets',
@@ -11,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
   });
   MatchesSinglesSets.associate = function(models) {
     MatchesSinglesSets.belongsTo(models.MatchesSingles, { as: 'match' })
-    MatchesSinglesSets.belongsTo(models.Players, { as: 'player' })
+    MatchesSinglesSets.belongsTo(models.Players, {
+      foreignKey: 'player_id',
+      as: 'player'
+    })
   };
   return MatchesSinglesSets;
 };

@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const doubles = require('./doubles')
-const singles = require('./singles')
+const all = require('./all')
+const createMatch = require('./createMatch')
 
-router.use('/doubles', doubles)
-router.use('/singles', singles)
+router.route('/')
+  .get(all)
+  .post(createMatch)
 
 module.exports = router

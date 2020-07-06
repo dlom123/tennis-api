@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     settings: DataTypes.ARRAY(DataTypes.STRING),
     surfaces: DataTypes.ARRAY(DataTypes.STRING),
+    isPrivate: DataTypes.BOOLEAN,
     deletedAt: DataTypes.DATE
   }, {
     tableName: 'locations',

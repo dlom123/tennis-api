@@ -1,31 +1,20 @@
-const path = require('path')
-const db = require(path.resolve(process.cwd(), 'db/models'))
+const playersController = require('@controllers/playersController')
 
 /*
   Get player by id
+
+  Required route parameters:
+  - playerId=1
+    - the id of the player to retrieve
 */
 
 module.exports = async (req, res) => {
-  await db.Players.findOne({
-    attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
-                 'backhand', 'avatarUrl', 'createdAt'],
-    where: {
-      id: Number(req.params.playerId)
-    },
-    include: [
-      {
-        model: db.Users,
-        as: 'user',
-        attributes: ['id', 'firstName', 'lastName', 'email', 'createdAt']
-      }
-    ]
-  })
-    .then(player => {
-      const data = {
-        // always wrap API responses in a "data" array for consistency
-        data: [player]
-      }
+  player = await playersController.getById(req.params.playerId)
 
-      return res.status(200).json(data)
-    })
+  const data = {
+    // always wrap API responses in a "data" property for consistency
+    data: [player]
+  }
+
+  return res.status(200).json(data)
 }

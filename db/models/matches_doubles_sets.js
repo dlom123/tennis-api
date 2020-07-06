@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const MatchesDoublesSets = sequelize.define('MatchesDoublesSets', {
+    matchId: DataTypes.INTEGER,
+    teamId: DataTypes.INTEGER,
     score: DataTypes.INTEGER,
+    seq: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {
     tableName: 'matches_doubles_sets',

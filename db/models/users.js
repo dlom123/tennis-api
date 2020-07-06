@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     email: DataTypes.STRING,
+    avatarUrl: DataTypes.STRING,
+    isActive: DataTypes.BOOLEAN,
     deletedAt: DataTypes.DATE
   }, {
 		tableName: 'users',
