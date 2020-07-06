@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
   let orderClause = []
 
   const matchType = req.query.type
-  if (matchType == 'singles') {
+  if (matchType === 'singles') {
     matches = await db.MatchesSingles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
       where: whereClause,
@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
         }
       ]
     })
-  } else if (matchType == 'doubles') {
+  } else if (matchType === 'doubles') {
     matches = await db.MatchesDoubles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
       where: whereClause,

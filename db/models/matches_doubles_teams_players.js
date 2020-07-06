@@ -2,6 +2,8 @@
 
 module.exports = (sequelize, DataTypes) => {
   const MatchesDoublesTeamsPlayers = sequelize.define('MatchesDoublesTeamsPlayers', {
+    teamId: DataTypes.INTEGER,
+    playerId: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {
     tableName: 'matches_doubles_teams_players',

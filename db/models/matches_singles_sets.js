@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     matchId: DataTypes.INTEGER,
     playerId: DataTypes.INTEGER,
     score: DataTypes.INTEGER,
+    seq: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {
     tableName: 'matches_singles_sets',

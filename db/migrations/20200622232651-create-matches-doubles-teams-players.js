@@ -8,17 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      player_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'players',
-          key: 'id'
-        }
-      },
       team_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'matches_doubles_teams',
+          key: 'id'
+        }
+      },
+      player_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'players',
           key: 'id'
         }
       },

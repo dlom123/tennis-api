@@ -1,10 +1,7 @@
 const path = require('path')
 const db = require(path.resolve(process.cwd(), 'db/models'))
 
-function removeDuplicates(arr) {
-  return [...new Set(arr)]
-}
-
+const removeDuplicates = arr => [...new Set(arr)]
 
 exports.getAll = async () =>
   await db.Players.findAll({
