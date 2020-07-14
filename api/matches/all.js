@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
         {
           model: db.MatchesSinglesSets,
           as: 'sets',
-          attributes: ['id', 'score', 'createdAt'],
+          attributes: ['id', 'score', 'tiebreaker_score', 'createdAt'],
           include: [
             {
               model: db.Players,
@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
         {
           model: db.MatchesDoublesSets,
           as: 'sets',
-          attributes: ['id', 'score', 'createdAt'],
+          attributes: ['id', 'score', 'tiebreaker_score', 'createdAt'],
           include: [
             {
               model: db.MatchesDoublesTeams,

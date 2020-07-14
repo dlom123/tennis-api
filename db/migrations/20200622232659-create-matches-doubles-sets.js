@@ -25,6 +25,9 @@ module.exports = {
       score: {
         type: Sequelize.INTEGER
       },
+      tiebreaker_score: {
+        type: Sequelize.INTEGER
+      },
       seq: {
         allowNull: false,
         type: Sequelize.INTEGER
