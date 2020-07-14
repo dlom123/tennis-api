@@ -23,6 +23,7 @@ exports.createMatchSingles = async body => {
         matchId: newMatch.id,
         playerId: player.id,
         score: set.score,
+        tiebreakerScore: set.tiebreakerScore,
         seq: set.seq
       })
     })
@@ -86,6 +87,7 @@ exports.createMatchDoubles = async body => {
         matchId: newMatch.id,
         teamId,
         score: set.score,
+        tiebreakerScore: set.tiebreakerScore,
         seq: set.seq
       })
     })
@@ -105,7 +107,7 @@ exports.createMatchDoubles = async body => {
 
 exports.getMatchesSinglesByIds = async matchIds =>
   await db.MatchesSingles.findAll({
-    attributes: ['id', 'location_id', 'setting', 'surface', 'date'],
+    attributes: ['id', 'locationId', 'setting', 'surface', 'date'],
     where: {
       id: [...matchIds]
     },
@@ -123,7 +125,7 @@ exports.getMatchesSinglesByIds = async matchIds =>
         model: db.MatchesSinglesSets,
         as: 'sets',
         required: true,
-        attributes: ['id', 'score'],
+        attributes: ['id', 'score', 'tiebreakerScore'],
         include: [
           {
             model: db.Players,
@@ -145,7 +147,7 @@ exports.getMatchesSinglesByIds = async matchIds =>
 
 exports.getMatchesDoublesByIds = async matchIds =>
   await db.MatchesDoubles.findAll({
-    attributes: ['id', 'location_id', 'setting', 'surface', 'date'],
+    attributes: ['id', 'locationId', 'setting', 'surface', 'date'],
     where: {
       id: [...matchIds]
     },
@@ -163,7 +165,7 @@ exports.getMatchesDoublesByIds = async matchIds =>
         model: db.MatchesDoublesSets,
         as: 'sets',
         required: true,
-        attributes: ['id', 'score'],
+        attributes: ['id', 'score', 'tiebreakerScore'],
         include: [
           {
             model: db.MatchesDoublesTeams,

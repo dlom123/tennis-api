@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     matchId: DataTypes.INTEGER,
     playerId: DataTypes.INTEGER,
     score: DataTypes.INTEGER,
+    tiebreakerScore: DataTypes.INTEGER,
     seq: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {
