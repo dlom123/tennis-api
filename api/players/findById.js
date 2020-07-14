@@ -9,12 +9,24 @@ const playersController = require('@controllers/playersController')
 */
 
 module.exports = async (req, res) => {
-  player = await playersController.getById(req.params.playerId)
 
   const data = {
     // always wrap API responses in a "data" property for consistency
-    data: [player]
+    data: []
   }
+
+  let player = await playersController.getById(req.params.playerId)
+
+  // transform: flatten the first/last name from the user data into the player data
+  const userInfo = player.dataValues.user
+  delete player.dataValues.user
+  player = {
+    ...player.dataValues,
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName
+  }
+
+  data.data.push(player)
 
   return res.status(200).json(data)
 }
