@@ -1,7 +1,5 @@
 'use strict';
 
-const { networkInterfaces } = require("os");
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users', {
