@@ -38,6 +38,6 @@
     "@root": ".",
     "@controllers": "controllers",
     "@models": "db/models",
-    "@utilities": "utilities"
+    "@utils": "utils"
   }
 }

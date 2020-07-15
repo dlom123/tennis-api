@@ -1,6 +1,6 @@
 const path = require('path')
 const db = require(path.resolve(process.cwd(), 'db/models'))
-const transform = require('@utilities/transforms')
+const transform = require('@utils/transforms')
 
 /*
   Get all singles or doubles matches, based on `type` query parameter

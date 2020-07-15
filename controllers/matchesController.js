@@ -1,6 +1,6 @@
 const path = require('path')
 const db = require(path.resolve(process.cwd(), 'db/models'))
-const transform = require('@utilities/transforms')
+const transform = require('@utils/transforms')
 
 const buildMatchObject = data => ({
   date: data.date,
