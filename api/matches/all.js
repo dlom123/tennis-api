@@ -1,5 +1,6 @@
 const path = require('path')
 const db = require(path.resolve(process.cwd(), 'db/models'))
+const transform = require('@utilities/transforms')
 
 /*
   Get all singles or doubles matches, based on `type` query parameter
@@ -21,6 +22,7 @@ module.exports = async (req, res) => {
   let orderClause = []
 
   const matchType = req.query.type
+  let matches = []
   if (matchType === 'singles') {
     matches = await db.MatchesSingles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
@@ -54,6 +56,8 @@ module.exports = async (req, res) => {
         }
       ]
     })
+
+    matches = transform.flattenMatchesSinglesPlayers(matches)
   } else if (matchType === 'doubles') {
     matches = await db.MatchesDoubles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
@@ -101,6 +105,8 @@ module.exports = async (req, res) => {
         }
       ]
     })
+
+    matches = transform.flattenMatchesDoublesPlayers(matches)
   } else {
     // invalid request -- query param `type` must have value 'singles' or 'doubles'
     return res.status(400).json({ error: 'invalid value for type parameter' })
