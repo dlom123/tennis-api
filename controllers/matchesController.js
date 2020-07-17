@@ -126,7 +126,7 @@ exports.getMatchesSinglesByIds = async matchIds => {
         model: db.MatchesSinglesSets,
         as: 'sets',
         required: true,
-        attributes: ['id', 'score', 'tiebreakerScore'],
+        attributes: ['id', 'seq', 'score', 'tiebreakerScore'],
         include: [
           {
             model: db.Players,
@@ -171,7 +171,7 @@ exports.getMatchesDoublesByIds = async matchIds => {
         model: db.MatchesDoublesSets,
         as: 'sets',
         required: true,
-        attributes: ['id', 'score', 'tiebreakerScore'],
+        attributes: ['id', 'seq', 'score', 'tiebreakerScore'],
         include: [
           {
             model: db.MatchesDoublesTeams,
