@@ -4,8 +4,8 @@ const playersController = require('@controllers/playersController')
   Get all players
 
   Optional query parameters:
-  - withCount (no value)
-    - include a count of the total number of players
+  - search=searchTerm
+    - filter results, looking for searchTerm in firstName or lastName (case-insensitive)
 */
 
 module.exports = async (req, res) => {
@@ -14,11 +14,22 @@ module.exports = async (req, res) => {
     data: {}
   }
 
-  if ('withCount' in req.query) {
-    data.data.count = await playersController.getCount()
-  }
+  let searchTerm = req.query.search || ''
 
-  data.data.players = await playersController.getAll()
+  let players = await playersController.getAll(search=searchTerm)
+
+  // transform: flatten the first/last name from the user data into the player data
+  players = players.map(player => {
+    const userInfo = player.dataValues.user
+    delete player.dataValues.user
+    return {
+      ...player.dataValues,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName
+    }
+  })
+
+  data.data.players = players
 
   return res.status(200).json(data)
 }

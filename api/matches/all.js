@@ -1,28 +1,27 @@
 const path = require('path')
 const db = require(path.resolve(process.cwd(), 'db/models'))
+const transform = require('@utils/transforms')
 
 /*
   Get all singles or doubles matches, based on `type` query parameter
 
-  Required query parameters:
+  Optional query parameters:
   - type=singles|doubles
     - the type of matches to retrieve
 */
 
 module.exports = async (req, res) => {
-  // request validation
-  if (!req.query.type) {
-    // invalid request -- query param `type` must be provided
-    return res.status(400).json({ error: 'type parameter must be provided' })
+  if (req.query.type && !['singles', 'doubles'].includes(req.query.type)) {
+    // invalid request -- query param `type` must have value 'singles' or 'doubles'
+    return res.status(400).json({ error: 'invalid value for type parameter' })
   }
 
-  // valid request...perform requested operation
   let whereClause = {}
   let orderClause = []
-
-  const matchType = req.query.type
-  if (matchType === 'singles') {
-    matches = await db.MatchesSingles.findAll({
+  let matchesSingles = []
+  let matchesDoubles = []
+  if (!req.query.type || req.query.type === 'singles') {
+    matchesSingles = await db.MatchesSingles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
       where: whereClause,
       order: orderClause,
@@ -35,7 +34,7 @@ module.exports = async (req, res) => {
         {
           model: db.MatchesSinglesSets,
           as: 'sets',
-          attributes: ['id', 'score', 'createdAt'],
+          attributes: ['id', 'seq', 'score', 'tiebreaker_score', 'createdAt'],
           include: [
             {
               model: db.Players,
@@ -54,8 +53,12 @@ module.exports = async (req, res) => {
         }
       ]
     })
-  } else if (matchType === 'doubles') {
-    matches = await db.MatchesDoubles.findAll({
+
+    matchesSingles = transform.flattenMatchesSinglesPlayers(matchesSingles)
+  }
+  
+  if (!req.query.type || req.query.type === 'doubles') {
+    matchesDoubles = await db.MatchesDoubles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
       where: whereClause,
       order: orderClause,
@@ -68,7 +71,7 @@ module.exports = async (req, res) => {
         {
           model: db.MatchesDoublesSets,
           as: 'sets',
-          attributes: ['id', 'score', 'createdAt'],
+          attributes: ['id', 'seq', 'score', 'tiebreaker_score', 'createdAt'],
           include: [
             {
               model: db.MatchesDoublesTeams,
@@ -101,14 +104,23 @@ module.exports = async (req, res) => {
         }
       ]
     })
-  } else {
-    // invalid request -- query param `type` must have value 'singles' or 'doubles'
-    return res.status(400).json({ error: 'invalid value for type parameter' })
+
+    matchesDoubles = transform.flattenMatchesDoublesPlayers(matchesDoubles)
+  }
+
+  matchesData = {}
+  if (!req.query.type) {
+    matchesData.singles = matchesSingles
+    matchesData.doubles = matchesDoubles
+  } else if (req.query.type === 'singles' && matchesSingles.length) {
+    matchesData = matchesSingles
+  } else if (req.query.type === 'doubles' && matchesDoubles.length) {
+    matchesData = matchesDoubles
   }
 
   const data = {
     // always wrap API responses in a "data" property for consistency
-    data: matches
+    data: matchesData
   }
 
   return res.status(200).json(data)

@@ -1,5 +1,6 @@
 const path = require('path')
 const db = require(path.resolve(process.cwd(), 'db/models'))
+const transform = require('@utils/transforms')
 
 const buildMatchObject = data => ({
   date: data.date,
@@ -23,6 +24,7 @@ exports.createMatchSingles = async body => {
         matchId: newMatch.id,
         playerId: player.id,
         score: set.score,
+        tiebreakerScore: set.tiebreakerScore,
         seq: set.seq
       })
     })
@@ -86,6 +88,7 @@ exports.createMatchDoubles = async body => {
         matchId: newMatch.id,
         teamId,
         score: set.score,
+        tiebreakerScore: set.tiebreakerScore,
         seq: set.seq
       })
     })
@@ -103,9 +106,9 @@ exports.createMatchDoubles = async body => {
   }
 }
 
-exports.getMatchesSinglesByIds = async matchIds =>
-  await db.MatchesSingles.findAll({
-    attributes: ['id', 'location_id', 'setting', 'surface', 'date'],
+exports.getMatchesSinglesByIds = async matchIds => {
+  let matches = await db.MatchesSingles.findAll({
+    attributes: ['id', 'locationId', 'setting', 'surface', 'date'],
     where: {
       id: [...matchIds]
     },
@@ -123,7 +126,7 @@ exports.getMatchesSinglesByIds = async matchIds =>
         model: db.MatchesSinglesSets,
         as: 'sets',
         required: true,
-        attributes: ['id', 'score'],
+        attributes: ['id', 'seq', 'score', 'tiebreakerScore'],
         include: [
           {
             model: db.Players,
@@ -143,9 +146,14 @@ exports.getMatchesSinglesByIds = async matchIds =>
     ]
   })
 
-exports.getMatchesDoublesByIds = async matchIds =>
-  await db.MatchesDoubles.findAll({
-    attributes: ['id', 'location_id', 'setting', 'surface', 'date'],
+  matches = transform.flattenMatchesSinglesPlayers(matches)
+
+  return matches
+}
+
+exports.getMatchesDoublesByIds = async matchIds => {
+  let matches = await db.MatchesDoubles.findAll({
+    attributes: ['id', 'locationId', 'setting', 'surface', 'date'],
     where: {
       id: [...matchIds]
     },
@@ -163,7 +171,7 @@ exports.getMatchesDoublesByIds = async matchIds =>
         model: db.MatchesDoublesSets,
         as: 'sets',
         required: true,
-        attributes: ['id', 'score'],
+        attributes: ['id', 'seq', 'score', 'tiebreakerScore'],
         include: [
           {
             model: db.MatchesDoublesTeams,
@@ -196,3 +204,8 @@ exports.getMatchesDoublesByIds = async matchIds =>
       }
     ]
   })
+
+  matches = transform.flattenMatchesDoublesPlayers(matches)
+
+  return matches
+}

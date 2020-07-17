@@ -37,6 +37,7 @@
   "_moduleAliases": {
     "@root": ".",
     "@controllers": "controllers",
-    "@models": "db/models"
+    "@models": "db/models",
+    "@utils": "utils"
   }
 }
