@@ -16,14 +16,17 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'invalid value for type parameter' })
   }
 
-  let orderClause = [['date', 'DESC']]
   let matchesSingles = []
   let matchesDoubles = []
   if (!req.query.type || req.query.type === 'singles') {
     matchesSingles = await db.MatchesSingles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
       order: [
-        ['date', 'DESC']
+        ['date', 'DESC'],
+        [
+          {model: db.MatchesSinglesSets, as: 'sets'},
+          'seq', 'ASC'
+        ]
       ],
       include: [
         {
@@ -61,7 +64,11 @@ module.exports = async (req, res) => {
     matchesDoubles = await db.MatchesDoubles.findAll({
       attributes: ['id', 'setting', 'surface', 'date', 'createdAt'],
       order: [
-        ['date', 'DESC']
+        ['date', 'DESC'],
+        [
+          {model: db.MatchesDoublesSets, as: 'sets'},
+          'seq', 'ASC'
+        ]
       ],
       include: [
         {

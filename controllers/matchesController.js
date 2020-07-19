@@ -113,7 +113,11 @@ exports.getMatchesSinglesByIds = async matchIds => {
       id: [...matchIds]
     },
     order: [
-      ['date', 'DESC']
+      ['date', 'DESC'],
+      [
+        {model: db.MatchesSinglesSets, as: 'sets'},
+        'seq', 'ASC'
+      ]
     ],
     include: [
       {
@@ -157,7 +161,11 @@ exports.getMatchesDoublesByIds = async matchIds => {
       id: [...matchIds]
     },
     order: [
-      ['date', 'DESC']
+      ['date', 'DESC'],
+      [
+        {model: db.MatchesDoublesSets, as: 'sets'},
+        'seq', 'ASC'
+      ]
     ],
     include: [
       {
