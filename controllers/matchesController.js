@@ -112,10 +112,9 @@ exports.getMatchesSinglesByIds = async matchIds => {
     where: {
       id: [...matchIds]
     },
-    order: [[
-      {model: db.MatchesSinglesSets, as: 'sets'},
-      'id', 'ASC'
-    ]],
+    order: [
+      ['date', 'DESC']
+    ],
     include: [
       {
         model: db.Locations,
@@ -157,10 +156,9 @@ exports.getMatchesDoublesByIds = async matchIds => {
     where: {
       id: [...matchIds]
     },
-    order: [[
-      {model: db.MatchesDoublesSets, as: 'sets'},
-      'id', 'ASC'
-    ]],
+    order: [
+      ['date', 'DESC']
+    ],
     include: [
       {
         model: db.Locations,
