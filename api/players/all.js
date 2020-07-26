@@ -9,27 +9,32 @@ const playersController = require('@controllers/playersController')
 */
 
 module.exports = async (req, res) => {
-  const data = {
-    // always wrap API responses in a "data" property for consistency
-    data: {}
-  }
+  try {
+    let searchTerm = req.query.search || ''
 
-  let searchTerm = req.query.search || ''
+    let players = await playersController.getAll(search=searchTerm)
 
-  let players = await playersController.getAll(search=searchTerm)
+    // transform: flatten the first/last name from the user data into the player data
+    players = players.map(player => {
+      const userInfo = player.dataValues.user
+      delete player.dataValues.user
+      return {
+        ...player.dataValues,
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName
+      }
+    })
 
-  // transform: flatten the first/last name from the user data into the player data
-  players = players.map(player => {
-    const userInfo = player.dataValues.user
-    delete player.dataValues.user
-    return {
-      ...player.dataValues,
-      firstName: userInfo.firstName,
-      lastName: userInfo.lastName
+    const data = {
+      // always wrap API responses in a "data" property for consistency
+      data: {}
     }
-  })
+    
+    data.data.players = players
 
-  data.data.players = players
-
-  return res.status(200).json(data)
+    return res.status(200).json(data)
+  } catch (e) {
+    console.error(e)
+    return res.status(500).json({ error: "Server error" })
+  }
 }

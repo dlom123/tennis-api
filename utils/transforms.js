@@ -18,9 +18,9 @@ exports.flattenMatchesDoublesPlayers = matches => {
   matches = matches.map(match => {
     match.sets = match.sets.map(set => {
       set.team.players.map(player => {
-        player.player.dataValues.firstName = player.player.user.firstName
-        player.player.dataValues.lastName = player.player.user.lastName
-        delete player.player.dataValues.user
+        player.dataValues.firstName = player.user.firstName
+        player.dataValues.lastName = player.user.lastName
+        delete player.dataValues.user
         return player
       })
       return set

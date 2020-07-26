@@ -87,22 +87,18 @@ module.exports = async (req, res) => {
               attributes: ['id'],
               include: [
                 {
-                  model: db.MatchesDoublesTeamsPlayers,
-                  as: 'players',
-                  attributes: ['id'],
+                  model: db.Players,
+                  as: 'player',
+                  attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
+                                'backhand', 'avatarUrl', 'createdAt'],
+                  through: {
+                    attributes: [] // do not include the join table's attributes
+                  },
                   include: [
                     {
-                      model: db.Players,
-                      as: 'player',
-                      attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
-                                   'backhand', 'avatarUrl', 'createdAt'],
-                      include: [
-                        {
-                          model: db.Users,
-                          as: 'user',
-                          attributes: ['id', 'firstName', 'lastName', 'email', 'createdAt']
-                        }
-                      ]
+                      model: db.Users,
+                      as: 'user',
+                      attributes: ['id', 'firstName', 'lastName', 'email', 'createdAt']
                     }
                   ]
                 }
