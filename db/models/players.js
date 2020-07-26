@@ -20,9 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'player_id',
       as: 'sets_singles'
     })
-    Players.hasMany(models.MatchesDoublesTeamsPlayers, {
+    Players.belongsToMany(models.MatchesDoublesTeams, {
+      through: 'matches_doubles_teams_players',
       foreignKey: 'player_id',
-      as: 'doubles_teams_player'
+      as: 'teams'
     })
   }
 

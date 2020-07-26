@@ -74,15 +74,15 @@ exports.getCount = async () =>
   })
 
 exports.getMatchesDoublesIdsByPlayerId = async playerId => {
-  doublesTeamsPlayer = await db.MatchesDoublesTeamsPlayers.findOne({
+  doublesTeamsPlayer = await db.Players.findOne({
     attributes: ['id'],
     where: {
-      playerId: Number(playerId)
+      id: Number(playerId)
     },
     include: [
       {
         model: db.MatchesDoublesTeams,
-        as: 'team',
+        as: 'teams',
         include: [
           {
             model: db.MatchesDoublesSets,
@@ -93,8 +93,14 @@ exports.getMatchesDoublesIdsByPlayerId = async playerId => {
     ]
   })
 
-  // remove duplicate match ids
-  matchIds = removeDuplicates(doublesTeamsPlayer.team.sets.map(set => set.matchId))
+  let matchIds = []
+
+  doublesTeamsPlayer.teams.forEach(team => {
+    const teamMatchIds = removeDuplicates(team.sets.map(set => set.matchId))
+    teamMatchIds.forEach(id => {
+      matchIds.push(id)
+    })
+  })
 
   return matchIds
 }
