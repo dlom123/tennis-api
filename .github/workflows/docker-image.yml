@@ -20,10 +20,10 @@ jobs:
       id: vars
       run: echo ::set-output name=tag::$(echo ${GITHUB_REF:11})
     - name: Build the tagged Docker image
-      run: docker build . --file Dockerfile --tag dlom123/tennis-app:${{steps.vars.outputs.tag}}
+      run: docker build . --file Dockerfile --tag dlom123/tennis-api:${{steps.vars.outputs.tag}}
     - name: Push the tagged Docker image
-      run: docker push dlom123/tennis-app:${{steps.vars.outputs.tag}}
+      run: docker push dlom123/tennis-api:${{steps.vars.outputs.tag}}
     - name: Build the latest Docker image
-      run: docker build . --file Dockerfile --tag dlom123/tennis-app:latest
+      run: docker build . --file Dockerfile --tag dlom123/tennis-api:latest
     - name: Push the latest Docker image
-      run: docker push dlom123/tennis-app:latest
+      run: docker push dlom123/tennis-api:latest
