@@ -29,6 +29,12 @@ exports.getAll = async (searchTerm = null) => {
     return await db.Players.findAll({
       attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
                   'backhand', 'avatarUrl', 'createdAt'],
+      order: [
+        [
+          {model: db.Users, as: 'user' },
+          'lastName', 'ASC'
+        ]
+      ],
       include: [
         {
           model: db.Users,
