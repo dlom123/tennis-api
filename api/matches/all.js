@@ -88,7 +88,7 @@ module.exports = async (req, res) => {
               include: [
                 {
                   model: db.Players,
-                  as: 'player',
+                  as: 'players',
                   attributes: ['id', 'gender', 'height', 'rating', 'isRightHanded',
                                 'backhand', 'avatarUrl', 'createdAt'],
                   through: {
