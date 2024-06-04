@@ -11,10 +11,12 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'locations',
     underscored: true
   })
-  Locations.associate = function(models) {
+  Locations.associate = function (models) {
+    Locations.hasMany(models.LocationsHours, { as: 'hours' })
+    Locations.hasMany(models.Courts, { as: 'courts' })
     Locations.hasMany(models.MatchesSingles, { as: 'matches_singles' })
     Locations.hasMany(models.MatchesDoubles, { as: 'matches_doubles' })
   }
-  
+
   return Locations
 }

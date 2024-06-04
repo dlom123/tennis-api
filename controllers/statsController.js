@@ -9,10 +9,15 @@ exports.getAll = async () =>
     ]
   })
 
-exports.getById = async statId =>
-  await db.Stats.findOne({
+exports.getById = async statId => {
+  const stat = await db.Stats.findOne({
     attributes: ['id', 'name', 'createdAt'],
     where: {
       id: Number(statId)
     }
   })
+  if (stat === null) {
+    return {}
+  }
+  return stat
+}
